@@ -1,4 +1,6 @@
 // ignore: file_names
+import 'package:finder_flutter/bachelorDetails.dart';
+import 'package:finder_flutter/bachelorPreview.dart';
 import 'package:flutter/material.dart';
 import 'models/bachelor.dart';
 import 'utils/fake_data.dart';
@@ -19,18 +21,24 @@ class BachelorListScreen extends StatelessWidget {
         itemCount: bachelors.length,
         itemBuilder: (context, index) {
           final bachelor = bachelors[index];
-          return ListTile(
-            leading: Image.asset(
-              bachelor.avatar,
-              width: 48,
-              height: 48,
-            ),
-            title: Text('${bachelor.firstname} ${bachelor.lastname}'),
-            subtitle: Text(bachelor.job),
-            trailing: Text(bachelor.gender.toString()),
+          return GestureDetector(
+            onTap: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => BachelorDetails(
+                    bachelor: bachelor,
+                  ),
+                ),
+              );
+            },
+            child: BachelorPreview(bachelor: bachelor),
           );
         },
       ),
     );
   }
 }
+
+
+

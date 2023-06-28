@@ -125,7 +125,7 @@ List<Bachelor> generateBachelors() {
         : femaleAvatars[Random().nextInt(femaleAvatars.length)];
 
     final job = faker.job.title();
-    final description = faker.lorem.sentences(3).join(' ');
+    final description = faker.lorem.sentences(2).join(' ');
 
     // Création d'un objet Bachelor avec les valeurs générées
     Bachelor bachelor = Bachelor(
