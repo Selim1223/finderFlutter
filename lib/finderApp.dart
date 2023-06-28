@@ -13,7 +13,7 @@ class FinderApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: BachelorListScreen(),
+      home: const BachelorListScreen(),
     );
   }
 }

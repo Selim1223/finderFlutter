@@ -4,20 +4,33 @@ import 'models/bachelor.dart';
 
 class BachelorDetails extends StatefulWidget {
   final Bachelor bachelor;
+  final bool isLiked;
+  final VoidCallback onLike;
 
-  const BachelorDetails({super.key, required this.bachelor});
+  const BachelorDetails({
+    Key? key,
+    required this.bachelor,
+    required this.isLiked,
+    required this.onLike,
+  }) : super(key: key);
 
   @override
-  // ignore: library_private_types_in_public_api
   _BachelorDetailsState createState() => _BachelorDetailsState();
 }
 
 class _BachelorDetailsState extends State<BachelorDetails> {
-  bool isLiked = false;
+  late bool isLiked;
+
+  @override
+  void initState() {
+    super.initState();
+    isLiked = widget.isLiked;
+  }
 
   void toggleLike() {
     setState(() {
       isLiked = !isLiked;
+      widget.onLike(); 
     });
   }
 
@@ -68,15 +81,23 @@ class _BachelorDetailsState extends State<BachelorDetails> {
               'Description: ${widget.bachelor.description}',
               style: const TextStyle(fontSize: 16),
             ),
+             const SizedBox(height: 8),
+            Text(
+              isLiked ? 'favorite bachelor !' : '',
+              style: const TextStyle(fontSize: 16),
+            ),
           ],
         ),
       ),
       floatingActionButton: FloatingActionButton(
-        child: const Icon(Icons.thumb_up),
+        child: Icon(
+          isLiked ? Icons.thumb_down
+          : Icons.thumb_up 
+          ),
         onPressed: () {
           final message = isLiked
-              ? 'You already liked this Bachelor!'
-              : 'You liked the Bachelor!';
+              ? 'You have removed this Bachelor from your favourites !'
+              : 'You have added this Bachelor to your favourites !';
           ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(
               content: Text(message),

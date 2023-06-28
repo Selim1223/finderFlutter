@@ -5,8 +5,15 @@ import 'models/bachelor.dart';
 
 class BachelorPreview extends StatefulWidget {
   final Bachelor bachelor;
+  final bool isLiked;
+  final VoidCallback onLike;
 
-  const BachelorPreview({super.key, required this.bachelor});
+  const BachelorPreview({
+    Key? key,
+    required this.bachelor,
+    required this.isLiked,
+    required this.onLike,
+  }) : super(key: key);
 
   @override
   // ignore: library_private_types_in_public_api
@@ -14,26 +21,19 @@ class BachelorPreview extends StatefulWidget {
 }
 
 class _BachelorPreviewState extends State<BachelorPreview> {
-  bool isLiked = false;
-
-  void toggleLike() {
-    setState(() {
-      isLiked = !isLiked;
-    });
-  }
-
   @override
   Widget build(BuildContext context) {
     return ListTile(
       leading: CircleAvatar(
         backgroundImage: AssetImage(widget.bachelor.avatar),
+        backgroundColor: widget.isLiked ? Colors.red : null, 
       ),
       trailing: IconButton(
         icon: Icon(
-          isLiked ? Icons.favorite : Icons.favorite_border,
+          widget.isLiked ? Icons.favorite : Icons.favorite_border,
           color: Colors.red,
         ),
-        onPressed: toggleLike,
+        onPressed: widget.onLike,
       ),
       title: Text("${widget.bachelor.firstname} ${widget.bachelor.lastname}"),
       subtitle: Text(widget.bachelor.job),
@@ -43,6 +43,8 @@ class _BachelorPreviewState extends State<BachelorPreview> {
           MaterialPageRoute(
             builder: (context) => BachelorDetails(
               bachelor: widget.bachelor,
+              isLiked: widget.isLiked,
+              onLike: widget.onLike,
             ),
           ),
         );
@@ -50,3 +52,4 @@ class _BachelorPreviewState extends State<BachelorPreview> {
     );
   }
 }
+

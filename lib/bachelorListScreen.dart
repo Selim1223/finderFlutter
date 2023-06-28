@@ -5,10 +5,17 @@ import 'package:flutter/material.dart';
 import 'models/bachelor.dart';
 import 'utils/fake_data.dart';
 
-class BachelorListScreen extends StatelessWidget {
-  final List<Bachelor> bachelors = generateBachelors();
+class BachelorListScreen extends StatefulWidget {
+  const BachelorListScreen({super.key});
 
-  BachelorListScreen({super.key});
+  @override
+  // ignore: library_private_types_in_public_api
+  _BachelorListScreenState createState() => _BachelorListScreenState();
+}
+
+class _BachelorListScreenState extends State<BachelorListScreen> {
+  List<Bachelor> bachelors = generateBachelors();
+  List<Bachelor> likedBachelors = [];
 
   @override
   Widget build(BuildContext context) {
@@ -28,17 +35,36 @@ class BachelorListScreen extends StatelessWidget {
                 MaterialPageRoute(
                   builder: (context) => BachelorDetails(
                     bachelor: bachelor,
+                    isLiked: likedBachelors.contains(bachelor),
+                    onLike: () {
+                      setState(() {
+                        if (likedBachelors.contains(bachelor)) {
+                          likedBachelors.remove(bachelor);
+                        } else {
+                          likedBachelors.add(bachelor);
+                        }
+                      });
+                    },
                   ),
                 ),
               );
             },
-            child: BachelorPreview(bachelor: bachelor),
+            child: BachelorPreview(
+              bachelor: bachelor,
+              isLiked: likedBachelors.contains(bachelor),
+              onLike: () {
+                setState(() {
+                  if (likedBachelors.contains(bachelor)) {
+                    likedBachelors.remove(bachelor);
+                  } else {
+                    likedBachelors.add(bachelor);
+                  }
+                });
+              },
+            ),
           );
         },
       ),
     );
   }
 }
-
-
-
