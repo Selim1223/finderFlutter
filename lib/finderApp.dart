@@ -1,3 +1,4 @@
+// ignore: file_names
 import 'package:finder_flutter/bachelorListScreen.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';

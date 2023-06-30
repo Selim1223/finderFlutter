@@ -1,3 +1,4 @@
+// ignore: file_names
 import 'package:finder_flutter/bachelorDetails.dart';
 import 'package:finder_flutter/bachelorFavoritesProvider.dart';
 import 'package:flutter/material.dart';

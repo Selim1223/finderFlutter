@@ -41,7 +41,7 @@ class BachelorPreview extends StatelessWidget {
               onPressed: onLike,
             ),
             IconButton(
-              icon: Icon(
+              icon: const Icon(
                 Icons.remove_circle_outline,
                 color: Colors.blue,
               ),

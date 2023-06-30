@@ -52,6 +52,7 @@ class _BachelorListScreenState extends State<BachelorListScreen> {
                       isFilterApplied = !isFilterApplied;
                       if (isFilterApplied) {
                         filteredBachelors = bachelors
+                            // ignore: unrelated_type_equality_checks
                             .where((bachelor) => bachelor.gender == 'Female')
                             .toList();
                       } else {
