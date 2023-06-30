@@ -7,12 +7,16 @@ import 'models/bachelor.dart';
 
 class BachelorPreview extends StatelessWidget {
   final Bachelor bachelor;
+  final bool isLiked;
+  final VoidCallback onLike;
+  final VoidCallback onDislike;
 
   const BachelorPreview({
     Key? key,
     required this.bachelor,
-    required bool isLiked,
-    required void Function() onLike,
+    required this.isLiked,
+    required this.onLike,
+    required this.onDislike,
   }) : super(key: key);
 
   @override
@@ -26,19 +30,24 @@ class BachelorPreview extends StatelessWidget {
             backgroundImage: AssetImage(bachelor.avatar),
             backgroundColor: isLiked ? Colors.red : null,
           ),
-          trailing: IconButton(
-            icon: Icon(
-              isLiked ? Icons.favorite : Icons.favorite_border,
-              color: Colors.red,
+          trailing: Row(
+            mainAxisSize: MainAxisSize.min, 
+            children: [
+            IconButton(
+              icon: Icon(
+                isLiked ? Icons.favorite : Icons.favorite_border,
+                color: Colors.red,
+              ),
+              onPressed: onLike,
             ),
-            onPressed: () {
-              if (isLiked) {
-                bachelorsProvider.removeLikedBachelor(bachelor);
-              } else {
-                bachelorsProvider.toggleLike(bachelor);
-              }
-            },
-          ),
+            IconButton(
+              icon: Icon(
+                Icons.thumb_down,
+                color: Colors.blue,
+              ),
+              onPressed: onDislike,
+            ),
+          ]),
           title: Text("${bachelor.firstname} ${bachelor.lastname}"),
           subtitle: Text(bachelor.job),
           onTap: () {
@@ -47,8 +56,14 @@ class BachelorPreview extends StatelessWidget {
               MaterialPageRoute(
                 builder: (context) => BachelorDetails(
                   bachelor: bachelor,
-                  isLiked: false,
-                  onLike: () {},
+                  isLiked: isLiked,
+                  onLike: () {
+                    if (isLiked) {
+                      bachelorsProvider.removeLikedBachelor(bachelor);
+                    } else {
+                      bachelorsProvider.toggleLike(bachelor);
+                    }
+                  },
                 ),
               ),
             );
