@@ -1,7 +1,9 @@
 // ignore: file_names
 import 'package:finder_flutter/bachelorListScreen.dart';
+import 'package:finder_flutter/provider/themeProvider.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:provider/provider.dart';
 import 'bachelorFavorites.dart';
 
 class FinderApp extends StatelessWidget {
@@ -32,9 +34,12 @@ class FinderApp extends StatelessWidget {
       routerConfig: router,
       debugShowCheckedModeBanner: false,
       title: 'Bachelors App',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-      ),
+      theme: ThemeData.light(), // Thème par défaut (Light Mode)
+      darkTheme: ThemeData.dark(), // Thème Dark Mode
+      themeMode: Provider.of<ThemeProvider>(context).currentTheme ==
+              AppTheme.Light
+          ? ThemeMode.light
+          : ThemeMode.dark,
     );
   }
 }

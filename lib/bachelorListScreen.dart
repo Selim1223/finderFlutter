@@ -1,6 +1,7 @@
 // ignore: file_names
-import 'package:finder_flutter/bachelorFavoritesProvider.dart';
+import 'package:finder_flutter/provider/bachelorFavoritesProvider.dart';
 import 'package:finder_flutter/bachelorPreview.dart';
+import 'package:finder_flutter/provider/themeProvider.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
@@ -24,6 +25,7 @@ class _BachelorListScreenState extends State<BachelorListScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final themeProvider = Provider.of<ThemeProvider>(context);
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
@@ -84,6 +86,28 @@ class _BachelorListScreenState extends State<BachelorListScreen> {
           ),
         ],
       ),
+       drawer: Drawer(
+        child: ListView(
+          padding: EdgeInsets.zero,
+          children: <Widget>[
+            DrawerHeader(
+              child: const Text('Settings'),
+              decoration: BoxDecoration(
+                color: Theme.of(context).primaryColor,
+              ),
+            ),
+            ListTile(
+              title: const Text('Toggle Dark Mode'),
+              trailing: Switch(
+                value: themeProvider.currentTheme == AppTheme.Dark,
+                onChanged: (value) {
+                  themeProvider.toggleTheme();
+                },
+              ),
+            ),
+          ],
+        ),
+      ),
       body: Consumer<BachelorFavoritesProvider>(
         builder: (context, bachelorsProvider, _) {
           final hiddenBachelors = bachelorsProvider.hiddenBachelors;
@@ -95,11 +119,13 @@ class _BachelorListScreenState extends State<BachelorListScreen> {
           }).toList();
 
           return ListView.builder(
-            itemCount:
-                isFilterApplied ? filteredBachelors.length : visibleBachelors.length,
+            itemCount: isFilterApplied
+                ? filteredBachelors.length
+                : visibleBachelors.length,
             itemBuilder: (context, index) {
-              final bachelor =
-                  isFilterApplied ? filteredBachelors[index] : visibleBachelors[index];
+              final bachelor = isFilterApplied
+                  ? filteredBachelors[index]
+                  : visibleBachelors[index];
               return BachelorPreview(
                 bachelor: bachelor,
                 isLiked: likedBachelors.contains(bachelor),

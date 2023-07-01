@@ -103,6 +103,7 @@ List<Bachelor> generateBachelors() {
 
   const int totalBachelors = 30;
   final List<Bachelor> bachelors = [];
+   int idCounter = 1; 
 
   final faker = Faker();
 
@@ -129,6 +130,7 @@ List<Bachelor> generateBachelors() {
 
     // Création d'un objet Bachelor avec les valeurs générées
     Bachelor bachelor = Bachelor(
+      id: idCounter++,
       firstname: firstName,
       lastname: lastName,
       gender: randomGender,

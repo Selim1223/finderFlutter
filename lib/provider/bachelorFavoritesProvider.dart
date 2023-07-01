@@ -2,7 +2,7 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
-import 'models/bachelor.dart';
+import '../models/bachelor.dart';
 
 class BachelorFavoritesProvider extends ChangeNotifier {
   final List<Bachelor> _likedBachelors = [];
@@ -47,5 +47,10 @@ class BachelorFavoritesProvider extends ChangeNotifier {
 
    bool isHidden(Bachelor bachelor) {
     return _hiddenBachelors.contains(bachelor);
+  }
+
+  void clearLikedBachelors() {
+    _likedBachelors.clear();
+    notifyListeners();
   }
 }
